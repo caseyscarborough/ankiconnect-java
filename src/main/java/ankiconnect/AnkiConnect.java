@@ -48,14 +48,14 @@ public class AnkiConnect {
         log.info("Finding cards in Anki with query: {}", query);
         Map<String, String> params = new HashMap<>();
         params.put("query", query);
-        return request("findCards", params, new TypeToken<>() {});
+        return request("findCards", params, new TypeToken<AnkiConnectResponse<List<Long>>>() {});
     }
 
     public List<Card> cardsInfo(List<Long> ids) {
         log.info("Finding card info from Anki for ids: {}", ids);
         Map<String, List<Long>> params = new HashMap<>();
         params.put("cards", ids);
-        return request("cardsInfo", params, new TypeToken<>() {});
+        return request("cardsInfo", params, new TypeToken<AnkiConnectResponse<List<Card>>>() {});
     }
 
     private <P, R> R request(String action, Map<String, P> params, TypeToken<AnkiConnectResponse<R>> token) {
