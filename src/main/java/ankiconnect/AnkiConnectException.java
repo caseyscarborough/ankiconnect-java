@@ -1,4 +1,4 @@
-package ankiconnect.exception;
+package ankiconnect;
 
 public class AnkiConnectException extends RuntimeException {
 

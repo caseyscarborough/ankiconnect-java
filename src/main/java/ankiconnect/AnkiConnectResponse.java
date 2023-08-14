@@ -1,11 +1,11 @@
-package ankiconnect.model;
+package ankiconnect;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AnkiConnectResponse<T> {
+class AnkiConnectResponse<T> {
     private T result;
     private String error;
 }

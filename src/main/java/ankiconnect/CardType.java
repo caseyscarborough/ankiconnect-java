@@ -1,4 +1,4 @@
-package ankiconnect.model;
+package ankiconnect;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

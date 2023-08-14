@@ -1,6 +1,7 @@
-package ankiconnect.model;
+package ankiconnect;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,12 +10,11 @@ import java.util.Map;
 @Getter
 @Setter
 public class Card {
-    private String modelName;
-    private String deckName;
-
-    @SerializedName("note")
+    @JsonProperty("note")
     private long noteId;
     private long cardId;
+    private String modelName;
+    private String deckName;
     private String question;
     private String answer;
     private String css;
@@ -27,7 +27,9 @@ public class Card {
     private int interval;
     private int factor;
     private int fieldOrder;
-    private CardType type;
-    private CardQueue queue;
     private Map<String, CardField> fields;
+    @JsonDeserialize(using = CardTypeDeserializer.class)
+    private CardType type;
+    @JsonDeserialize(using = CardQueueDeserializer.class)
+    private CardQueue queue;
 }
