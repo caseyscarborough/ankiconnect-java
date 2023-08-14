@@ -1,11 +1,12 @@
 plugins {
     id 'java'
-    id "io.freefair.lombok" version "8.1.0"
+    id 'idea'
     id "maven-publish"
+    id "io.freefair.lombok" version "8.1.0"
 }
 
 group = 'sh.casey.ankiconnect'
-version = '0.0.1-SNAPSHOT'
+version project.hasProperty('version') ? version : '0.0.1'
 
 repositories {
     mavenCentral()
