@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum CardQueue {
+public enum CardQueue implements Indexable {
     NEW(0),
     LEARN(1),
     REVIEW(2),

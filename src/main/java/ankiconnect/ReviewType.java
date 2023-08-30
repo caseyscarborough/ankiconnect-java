@@ -5,11 +5,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum CardType implements Indexable {
-    NEW(0),
-    LEARN(1),
-    REVIEW(2),
-    RELEARN(3);
+public enum ReviewType implements Indexable {
+    LEARNING(0),
+    REVIEW(1),
+    RELEARNING(2),
+    FILTERED(3),
+    MANUAL(4);
 
     private final int index;
 }

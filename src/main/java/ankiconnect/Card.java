@@ -32,4 +32,30 @@ public class Card {
     private CardType type;
     @JsonDeserialize(using = CardQueueDeserializer.class)
     private CardQueue queue;
+
+    public CardState getCardState() {
+        switch (queue) {
+            case SUSPENDED:
+                return CardState.SUSPENDED;
+            case SIBLING_BURIED:
+            case MANUALLY_BURIED:
+                return CardState.BURIED;
+            default:
+                break;
+        }
+        switch (type) {
+            case NEW:
+                return CardState.NEW;
+            case LEARN:
+                return CardState.LEARNING;
+            case RELEARN:
+                return CardState.RELEARNING;
+            case REVIEW:
+                return interval < 21 ? CardState.YOUNG : CardState.MATURE;
+            default:
+                break;
+        }
+
+        return CardState.UNKNOWN;
+    }
 }
