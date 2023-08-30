@@ -3,6 +3,7 @@ plugins {
     id 'idea'
     id "maven-publish"
     id "io.freefair.lombok" version "8.1.0"
+    id "jacoco"
 }
 
 group = 'sh.casey.ankiconnect'
@@ -33,5 +34,11 @@ publishing {
         gpr(MavenPublication) {
             from(components.java)
         }
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
     }
 }
