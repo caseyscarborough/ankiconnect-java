@@ -42,7 +42,7 @@ AnkiConnect ankiconnect = new AnkiConnect("localhost", 8765, "my-api-key");
 
 ### Find Cards
 
-This function will allow you to find cards based on a search query. The search query is the same as the one used in the Anki desktop client.
+Find cards based on a search query. The search query is the same as the ones used in the Anki desktop client.
 
 ```java
 List<Long> ids = ankiconnect.findCards("deck:Default");
@@ -50,10 +50,9 @@ List<Long> ids = ankiconnect.findCards("deck:Default");
 
 More information about the search query can be found [here](https://docs.ankiweb.net/searching.html).
 
-
 ### Cards Info
 
-This function will allow you to get information about a list of cards.
+Retrieve information about a list of cards.
 
 ```java
 List<Long> ids = ankiconnect.findCards("is:suspended");
@@ -61,6 +60,8 @@ List<Card> cards = ankiconnect.cardsInfo(ids);
 ```
 
 ### Reviews for Cards
+
+Retrieve a list of reviews for one or more cards.
 
 ```java
 // Get reviews for a single cards
