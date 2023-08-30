@@ -1,14 +1,17 @@
 package ankiconnect;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // Tests were ran with a new Anki profile with the following deck:
@@ -16,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 //
 class AnkiConnectTest {
 
-    private final AnkiConnect connect = new AnkiConnect(new TestHttpClient());
+    private final AnkiConnectHttpClient client = new TestHttpClient();
+    private final AnkiConnect connect = new AnkiConnect(client);
 
     @Test
     void testFindCards() {
@@ -45,6 +49,21 @@ class AnkiConnectTest {
 
         final Card card = cards.get(0);
         assertEquals(1354715263726L, card.getCardId());
+        assertNotNull(card.getQuestion());
+        assertNotNull(card.getAnswer());
+        assertNotNull(card.getCss());
+        assertNotNull(card.getModelName());
+        assertNotNull(card.getDeckName());
+        assertNotNull(card.getQueue());
+        assertNotNull(card.getType());
+        final Map<String, CardField> fields = card.getFields();
+        assertFalse(fields.isEmpty());
+        for (Map.Entry<String, CardField> entry : fields.entrySet()) {
+            final CardField field = entry.getValue();
+            assertNotNull(field);
+            assertNotNull(field.getValue());
+            assertTrue(field.getOrder() >= 0);
+        }
     }
 
     @Test
@@ -52,6 +71,13 @@ class AnkiConnectTest {
         final Long id = 1354715263726L;
         final List<Review> reviews = connect.getReviewsOfCard(id);
         assertEquals(2, reviews.size());
+        for (Review review : reviews) {
+            assertNotNull(review);
+            assertNotNull(review.getType());
+            assertTrue(review.getTime() > 0);
+            assertTrue(review.getEase() >= 1 && review.getEase() <= 4);
+            assertTrue(review.getTime() < System.currentTimeMillis());
+        }
     }
 
     @Test
@@ -62,5 +88,11 @@ class AnkiConnectTest {
         for (Map.Entry<Long, List<Review>> entry : map.entrySet()) {
             assertEquals(2, entry.getValue().size());
         }
+    }
+
+    @Test
+    void testError() {
+        final AnkiConnectResponse<String> response = client.request("null", new HashMap<>(), new TypeReference<AnkiConnectResponse<String>>() {});
+        assertEquals("unsupported action", response.getError());
     }
 }

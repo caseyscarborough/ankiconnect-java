@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,7 +37,7 @@ class TestHttpClient extends AnkiConnectHttpClient {
             log.info("Caching response to {}", relativePath);
             mapper.writeValue(file, response);
             return response;
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new AnkiConnectException("Could not make request to the AnkiConnect API", e);
         }
     }
