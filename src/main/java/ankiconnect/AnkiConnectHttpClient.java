@@ -27,8 +27,7 @@ class AnkiConnectHttpClient {
         this.bindPort = bindPort;
         this.apiKey = apiKey;
         this.client = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS).build();
-        this.mapper = new ObjectMapper();
-
+        this.mapper = JacksonConfiguration.getObjectMapper();
     }
 
     public <P, R> AnkiConnectResponse<R> request(AnkiConnectRequest<P> body, TypeReference<AnkiConnectResponse<R>> token) {

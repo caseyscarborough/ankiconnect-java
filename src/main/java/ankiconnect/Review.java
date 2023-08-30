@@ -1,6 +1,5 @@
 package ankiconnect;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +13,5 @@ public class Review {
     private int lastIvl;
     private int factor;
     private int time;
-
-    @JsonDeserialize(using = ReviewTypeDeserializer.class)
     private ReviewType type;
 }

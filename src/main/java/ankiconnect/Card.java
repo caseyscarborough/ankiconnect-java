@@ -1,7 +1,7 @@
 package ankiconnect;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,11 +28,10 @@ public class Card {
     private int factor;
     private int fieldOrder;
     private Map<String, CardField> fields;
-    @JsonDeserialize(using = CardTypeDeserializer.class)
     private CardType type;
-    @JsonDeserialize(using = CardQueueDeserializer.class)
     private CardQueue queue;
 
+    @JsonIgnore
     public CardState getCardState() {
         switch (queue) {
             case SUSPENDED:

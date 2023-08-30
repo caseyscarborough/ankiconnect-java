@@ -14,7 +14,7 @@ import java.util.Map;
 @Slf4j
 class TestHttpClient extends AnkiConnectHttpClient {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = JacksonConfiguration.getObjectMapper();
 
     public TestHttpClient() {
         super("localhost", 8765, null);
