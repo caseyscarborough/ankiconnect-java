@@ -32,12 +32,12 @@ public class AnkiConnect {
 
     public List<Long> findCards(String query) {
         log.info("Finding cards in Anki with query: {}", query);
-        return client.request("findCards", params("query", query), new TypeReference<AnkiConnectResponse<List<Long>>>() {}).getResult();
+        return request("findCards", params("query", query), new TypeReference<AnkiConnectResponse<List<Long>>>() {}).getResult();
     }
 
     public List<Card> cardsInfo(List<Long> ids) {
         log.info("Finding card info from Anki for ids: {}", ids);
-        return client.request("cardsInfo", params("cards", ids), new TypeReference<AnkiConnectResponse<List<Card>>>() {}).getResult();
+        return request("cardsInfo", params("cards", ids), new TypeReference<AnkiConnectResponse<List<Card>>>() {}).getResult();
     }
 
     public List<Review> getReviewsOfCard(Long id) {
@@ -47,7 +47,7 @@ public class AnkiConnect {
 
     public Map<Long, List<Review>> getReviewsOfCards(List<Long> ids) {
         log.info("Finding reviews from Anki for ids: {}", ids);
-        return client.request("getReviewsOfCards", params("cards", ids), new TypeReference<AnkiConnectResponse<Map<String, List<Review>>>>() {}).getResult()
+        return request("getReviewsOfCards", params("cards", ids), new TypeReference<AnkiConnectResponse<Map<String, List<Review>>>>() {}).getResult()
             .entrySet()
             .stream()
             .collect(Collectors.toMap(e -> Long.parseLong(e.getKey()), Map.Entry::getValue));
@@ -57,5 +57,13 @@ public class AnkiConnect {
         Map<String, T> params = new HashMap<>();
         params.put(key, value);
         return params;
+    }
+
+    private <P, R> AnkiConnectResponse<R> request(String action, Map<String, P> params, TypeReference<AnkiConnectResponse<R>> token) {
+        final AnkiConnectResponse<R> response = client.request(action, params, token);
+        if (response.getError() != null) {
+            throw new AnkiConnectException("An error was returning from the AnkiConnect API: " + response.getError());
+        }
+        return response;
     }
 }
