@@ -9,7 +9,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
 
 @Slf4j
 class TestHttpClient extends AnkiConnectHttpClient {
@@ -21,12 +20,8 @@ class TestHttpClient extends AnkiConnectHttpClient {
     }
 
     @Override
-    public <P, R> AnkiConnectResponse<R> request(String action, Map<String, P> params, TypeReference<AnkiConnectResponse<R>> token) {
+    public <P, R> AnkiConnectResponse<R> request(AnkiConnectRequest<P> body, TypeReference<AnkiConnectResponse<R>> token) {
         try {
-            AnkiConnectRequest<P> body = new AnkiConnectRequest<>();
-            body.setAction(action);
-            body.setVersion(6);
-            body.setParams(params);
             final String s = mapper.writeValueAsString(body);
             final String hash = DigestUtils.md5Hex(s);
             final String relativePath = "src/test/resources/json/" + hash + ".json";

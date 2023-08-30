@@ -6,11 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class AnkiConnect {
 
     private final AnkiConnectHttpClient client;
+
+    public AnkiConnect() {
+        this("localhost", 8765);
+    }
 
     public AnkiConnect(String bindAddress, Integer bindPort) {
         this(bindAddress, bindPort, null);
@@ -34,9 +39,12 @@ public class AnkiConnect {
         return client.request("cardsInfo", params("cards", ids), new TypeReference<AnkiConnectResponse<List<Card>>>() {}).getResult();
     }
 
-    public Map<String, List<Review>> getReviewsOfCards(List<Long> ids) {
+    public Map<Long, List<Review>> getReviewsOfCards(List<Long> ids) {
         log.info("Finding reviews from Anki for ids: {}", ids);
-        return client.request("getReviewsOfCards", params("cards", ids), new TypeReference<AnkiConnectResponse<Map<String, List<Review>>>>() {}).getResult();
+        return client.request("getReviewsOfCards", params("cards", ids), new TypeReference<AnkiConnectResponse<Map<String, List<Review>>>>() {}).getResult()
+            .entrySet()
+            .stream()
+            .collect(Collectors.toMap(e -> Long.parseLong(e.getKey()), Map.Entry::getValue));
     }
 
     private <T> Map<String, T> params(String key, T value) {

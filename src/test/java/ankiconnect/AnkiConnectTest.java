@@ -49,9 +49,9 @@ class AnkiConnectTest {
     @Test
     void testReviewsForCards() {
         final Long id = 1354715263726L;
-        final Map<String, List<Review>> map = connect.getReviewsOfCards(Collections.singletonList(id));
+        final Map<Long, List<Review>> map = connect.getReviewsOfCards(Collections.singletonList(id));
         assertEquals(1, map.size());
-        final List<Review> reviews = map.get(id.toString());
+        final List<Review> reviews = map.get(id);
         assertEquals(2, reviews.size());
     }
 }
