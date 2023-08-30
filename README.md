@@ -1,5 +1,7 @@
 # <img src="https://imgur.com/ehhdBJl.png" height="32"/> ankiconnect-java
 
+[![](https://github.com/caseyscarborough/ankiconnect-java/actions/workflows/gradle.yml/badge.svg)](https://github.com/caseyscarborough/ankiconnect-java/actions/workflows/gradle.yml)
+
 This is a Java library used to interact with [AnkiConnect](https://foosoft.net/projects/anki-connect/).
 
 ## Adding the Dependency
