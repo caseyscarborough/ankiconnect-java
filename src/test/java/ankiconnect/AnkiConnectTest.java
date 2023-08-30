@@ -2,6 +2,7 @@ package ankiconnect;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +48,19 @@ class AnkiConnectTest {
     }
 
     @Test
-    void testReviewsForCards() {
+    void testReviewsForCard() {
         final Long id = 1354715263726L;
-        final Map<Long, List<Review>> map = connect.getReviewsOfCards(Collections.singletonList(id));
-        assertEquals(1, map.size());
-        final List<Review> reviews = map.get(id);
+        final List<Review> reviews = connect.getReviewsOfCard(id);
         assertEquals(2, reviews.size());
+    }
+
+    @Test
+    void testReviewsForCards() {
+        final List<Long> ids = Arrays.asList(1354715263726L, 1354715369324L, 1354715369325L);
+        final Map<Long, List<Review>> map = connect.getReviewsOfCards(ids);
+        assertEquals(ids.size(), map.size());
+        for (Map.Entry<Long, List<Review>> entry : map.entrySet()) {
+            assertEquals(2, entry.getValue().size());
+        }
     }
 }

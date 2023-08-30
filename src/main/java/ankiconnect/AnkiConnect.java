@@ -3,6 +3,7 @@ package ankiconnect;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,11 @@ public class AnkiConnect {
     public List<Card> cardsInfo(List<Long> ids) {
         log.info("Finding card info from Anki for ids: {}", ids);
         return client.request("cardsInfo", params("cards", ids), new TypeReference<AnkiConnectResponse<List<Card>>>() {}).getResult();
+    }
+
+    public List<Review> getReviewsOfCard(Long id) {
+        final Map<Long, List<Review>> reviews = getReviewsOfCards(Collections.singletonList(id));
+        return reviews.get(id);
     }
 
     public Map<Long, List<Review>> getReviewsOfCards(List<Long> ids) {
