@@ -1,4 +1,4 @@
-# ankiconnect-java
+# <img src="https://imgur.com/ehhdBJl.png" height="32"/> ankiconnect-java
 
 This is a Java library used to interact with [AnkiConnect](https://foosoft.net/projects/anki-connect/).
 
@@ -21,6 +21,9 @@ dependencies {
 ```
 
 ## Usage
+
+All method names in the library correspond to the actions in the AnkiConnect API and documentation to keep
+the usage straightforward.
 
 ### Creating a Client
 
